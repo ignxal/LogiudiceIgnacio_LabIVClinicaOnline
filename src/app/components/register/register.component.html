@@ -1,1 +1,218 @@
-<p>register works!</p>
+<div class="container mt-5">
+  <h2>Registro</h2>
+
+  <div class="mb-3">
+    <label for="userTypeFilter" class="form-label"
+      >Seleccione el tipo de usuario:</label
+    >
+    <select
+      class="form-select"
+      id="userTypeFilter"
+      (change)="onUserTypeChange($event)"
+      required
+    >
+      <option value="" disabled selected>Seleccione...</option>
+      <option value="patient">Paciente</option>
+      <option value="specialist">Especialista</option>
+    </select>
+  </div>
+
+  <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()" novalidate>
+    <div class="mb-3">
+      <label for="firstName" class="form-label">Nombre</label>
+      <input
+        type="text"
+        class="form-control"
+        id="firstName"
+        formControlName="firstName"
+        required
+      />
+      <div *ngIf="isFieldInvalid('firstName')" class="text-danger">
+        Nombre es requerido
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="lastName" class="form-label">Apellido</label>
+      <input
+        type="text"
+        class="form-control"
+        id="lastName"
+        formControlName="lastName"
+        required
+      />
+      <div *ngIf="isFieldInvalid('lastName')" class="text-danger">
+        Apellido es requerido
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="age" class="form-label">Edad</label>
+      <input
+        type="number"
+        class="form-control"
+        id="age"
+        formControlName="age"
+        required
+      />
+      <div *ngIf="isFieldInvalid('age')" class="text-danger">
+        Edad es requerida
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="dni" class="form-label">DNI</label>
+      <input
+        type="text"
+        class="form-control"
+        id="dni"
+        formControlName="dni"
+        required
+        pattern="\d{8}"
+      />
+      <div *ngIf="isFieldInvalid('dni')" class="text-danger">
+        DNI es requerido y debe tener 8 dígitos
+      </div>
+    </div>
+
+    <div *ngIf="userType === 'patient'">
+      <div class="mb-3">
+        <label for="healthInsurance" class="form-label">Obra Social</label>
+        <input
+          type="text"
+          class="form-control"
+          id="healthInsurance"
+          formControlName="healthInsurance"
+          required
+        />
+        <div *ngIf="isFieldInvalid('healthInsurance')" class="text-danger">
+          Obra Social es requerida
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="email" class="form-label">Mail</label>
+        <input
+          type="email"
+          class="form-control"
+          id="email"
+          formControlName="email"
+          required
+        />
+        <div *ngIf="isFieldInvalid('email')" class="text-danger">
+          Correo Electrónico es requerido y debe ser válido
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="password" class="form-label">Contraseña</label>
+        <input
+          type="password"
+          class="form-control"
+          id="password"
+          formControlName="password"
+          required
+        />
+        <div *ngIf="isFieldInvalid('password')" class="text-danger">
+          Contraseña es requerida
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="profileImage1" class="form-label">Imagen de Perfil 1</label>
+        <input
+          type="file"
+          class="form-control"
+          id="profileImage1"
+          formControlName="profileImage1"
+          accept="image/*"
+          required
+        />
+        <div *ngIf="isFieldInvalid('profileImage1')" class="text-danger">
+          Imagen de Perfil 1 es requerida
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="profileImage2" class="form-label">Imagen de Perfil 2</label>
+        <input
+          type="file"
+          class="form-control"
+          id="profileImage2"
+          formControlName="profileImage2"
+          accept="image/*"
+          required
+        />
+        <div *ngIf="isFieldInvalid('profileImage2')" class="text-danger">
+          Imagen de Perfil 2 es requerida
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="userType === 'specialist'">
+      <div class="mb-3">
+        <label for="specialty" class="form-label">Especialidad</label>
+        <select
+          class="form-select"
+          id="specialty"
+          formControlName="specialty"
+          required
+        >
+          <option value="">Seleccionar Especialidad</option>
+          <option value="option1">Dentista</option>
+          <option value="option2">Dermatologo</option>
+        </select>
+        <div *ngIf="isFieldInvalid('specialty')" class="text-danger">
+          Especialidad es requerida
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="email" class="form-label">Mail</label>
+        <input
+          type="email"
+          class="form-control"
+          id="email"
+          formControlName="email"
+          required
+        />
+        <div *ngIf="isFieldInvalid('email')" class="text-danger">
+          Correo Electrónico es requerido y debe ser válido
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="password" class="form-label">Contraseña</label>
+        <input
+          type="password"
+          class="form-control"
+          id="password"
+          formControlName="password"
+          required
+        />
+        <div *ngIf="isFieldInvalid('password')" class="text-danger">
+          Contraseña es requerida
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="profileImage" class="form-label">Imagen de Perfil</label>
+        <input
+          type="file"
+          class="form-control"
+          id="profileImage"
+          formControlName="profileImage"
+          accept="image/*"
+          required
+        />
+        <div *ngIf="isFieldInvalid('profileImage')" class="text-danger">
+          Imagen de Perfil es requerida
+        </div>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="!userType">
+      Registrarse
+    </button>
+  </form>
+</div>

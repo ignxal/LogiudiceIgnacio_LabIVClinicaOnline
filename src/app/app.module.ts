@@ -9,15 +9,25 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { AngularFireModule } from '@angular/fire/compat';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, RegisterComponent, WelcomeComponent],
+  declarations: [
+    AppComponent,
+    LoginComponent,
+    RegisterComponent,
+    WelcomeComponent,
+  ],
   imports: [
     BrowserModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
     AppRoutingModule,
     SharedModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    ReactiveFormsModule,
   ],
   providers: [
     {
