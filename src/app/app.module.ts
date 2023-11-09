@@ -12,6 +12,7 @@ import { WelcomeComponent } from './components/welcome/welcome.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AngularFireModule } from '@angular/fire/compat';
 import { environment } from 'src/environments/environment';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { environment } from 'src/environments/environment';
     HttpClientModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
+    MatProgressSpinnerModule,
   ],
   providers: [
     {

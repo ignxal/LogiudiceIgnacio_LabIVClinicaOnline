@@ -36,7 +36,7 @@ export class RegisterComponent implements OnInit {
     this.registrationForm = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      age: ['', [Validators.required, Validators.min(0)]],
+      age: ['', [Validators.required, Validators.min(18)]],
       dni: ['', [Validators.required, Validators.pattern(/^\d{8}$/)]],
       userType: ['', Validators.required],
       specialty: [''],
@@ -51,6 +51,7 @@ export class RegisterComponent implements OnInit {
 
   onSubmit() {
     if (this.registrationForm && this.registrationForm.valid) {
+      this.loader.show();
       const userObj = this.getUserObject();
 
       this.authService
@@ -59,14 +60,17 @@ export class RegisterComponent implements OnInit {
           this.authService
             .login(userObj.email, userObj.password)
             .then(() => {
-              this.router.navigate(['/home']);
+              this.loader.hide();
+              this.router.navigate(['']);
             })
             .catch((err) => {
               console.error(err);
+              this.loader.hide();
             });
         })
         .catch((err) => {
           console.log(err);
+          this.loader.hide();
         });
 
       console.log('Form submitted:', this.registrationForm.value);
@@ -128,6 +132,7 @@ export class RegisterComponent implements OnInit {
       }
 
       this.registrationForm?.updateValueAndValidity();
+      this.loader.hide();
     }
   }
 }
