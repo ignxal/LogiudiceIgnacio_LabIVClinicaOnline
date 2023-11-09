@@ -1,0 +1,10 @@
+{
+  "hosting": {
+    "site": "clinica-online-c98bc",
+    "public": "dist/clinica-online",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "frameworksBackend": {
+      "region": "us-east1"
+    }
+  }
+}

@@ -1,0 +1,38 @@
+/* welcome.component.css */
+
+.welcome-container {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.welcome-header {
+  font-size: 2em;
+  color: #61dafb;
+}
+
+.welcome-message {
+  font-size: 1.2em;
+  color: #ddd;
+  margin-bottom: 20px;
+}
+
+.welcome-links {
+  display: flex;
+  justify-content: center;
+}
+
+.welcome-links a {
+  margin: 0 10px;
+  padding: 10px 20px;
+  text-decoration: none;
+  border: 2px solid #61dafb;
+  border-radius: 5px;
+  color: #61dafb;
+  font-weight: bold;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.welcome-links a:hover {
+  background-color: #61dafb;
+  color: #fff;
+}
