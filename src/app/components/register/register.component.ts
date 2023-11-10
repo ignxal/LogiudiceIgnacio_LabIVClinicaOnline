@@ -15,6 +15,8 @@ export class RegisterComponent implements OnInit {
   userType: string = '';
   displayLoader: boolean = false;
   displayLoaderSubscription!: Subscription;
+  specialtyOptions: string[] = ['Dentista', 'Dermatologo'];
+  showSpecialtyOptions = false;
 
   constructor(
     private fb: FormBuilder,
@@ -26,17 +28,30 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
     this.displayLoaderSubscription = this.loader.loaderState$.subscribe({
       next: (state) => (this.displayLoader = state),
-      error: (err) => console.log(err),
+      error: (err) => console.error(err),
     });
 
     this.initializeForm();
   }
 
+  onSpecialtyChange(value: string) {
+    if (!this.specialtyOptions.includes(value)) {
+      this.showSpecialtyOptions = true;
+    } else {
+      this.showSpecialtyOptions = false;
+    }
+  }
+
+  onSelectOption(option: string) {
+    this.registrationForm.get('specialty')?.setValue(option);
+    this.showSpecialtyOptions = false;
+  }
+
   initializeForm() {
     this.registrationForm = this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      age: ['', [Validators.required, Validators.min(18)]],
+      firstName: ['', [Validators.required, Validators.minLength(1)]],
+      lastName: ['', [Validators.required, Validators.minLength(1)]],
+      age: ['', [Validators.required, Validators.min(18), Validators.max(100)]],
       dni: ['', [Validators.required, Validators.pattern(/^\d{8}$/)]],
       userType: ['', Validators.required],
       specialty: [''],
@@ -75,7 +90,7 @@ export class RegisterComponent implements OnInit {
 
       console.log('Form submitted:', this.registrationForm.value);
     } else {
-      console.log('Form is invalid. Please check the fields.');
+      console.warn('Form is invalid. Please check the fields.');
     }
   }
 
@@ -116,6 +131,12 @@ export class RegisterComponent implements OnInit {
         this.registrationForm
           ?.get('healthInsurance')
           ?.setValidators(Validators.required);
+        this.registrationForm
+          ?.get('profileImage2')
+          ?.setValidators(Validators.required);
+        this.registrationForm
+          ?.get('profileImage1')
+          ?.setValidators(Validators.required);
         this.registrationForm?.get('specialty')?.clearValidators();
         this.registrationForm?.get('profileImage')?.clearValidators();
       } else if (value === 'specialist') {
@@ -124,11 +145,10 @@ export class RegisterComponent implements OnInit {
           ?.setValidators(Validators.required);
         this.registrationForm?.get('healthInsurance')?.clearValidators();
         this.registrationForm
-          ?.get('profileImage1')
+          ?.get('profileImage')
           ?.setValidators(Validators.required);
-        this.registrationForm
-          ?.get('profileImage2')
-          ?.setValidators(Validators.required);
+        this.registrationForm?.get('profileImage1')?.clearValidators();
+        this.registrationForm?.get('profileImage2')?.clearValidators();
       }
 
       this.registrationForm?.updateValueAndValidity();
