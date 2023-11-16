@@ -1,27 +1,44 @@
-# ClinicaOnline
+# Sistema de Gestión de Clínica
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.1.
+Bienvenido al repositorio del sistema de gestión de la Clínica Online. Esta aplicación agiliza las operaciones de una clínica de salud, ofreciendo funciones para el registro de usuarios, programación de citas y atención integral al paciente. A continuación, se presenta una breve descripción de las funcionalidades del sistema:
 
-## Development server
+## Sprint 1: Gestión de Usuarios
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- **Página de Bienvenida**: Acceso rápido a inicio de sesión y registro.
+- **Registro**: Pacientes y Especialistas pueden registrarse con detalles relevantes.
+- **Inicio de Sesión**: Autenticación segura con acceso específico según el rol.
+- **Sección de Usuarios**: Los administradores pueden ver información de usuarios, habilitar/deshabilitar el acceso de Especialistas y crear nuevos usuarios.
 
-## Code scaffolding
+## Sprint 2: Manejo de Citas
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- **Mis Citas (Paciente)**: Ver y gestionar citas programadas.
+- **Acciones de Citas**: Pacientes y Especialistas pueden cancelar, revisar, completar encuestas y calificar citas.
+- **Turnos (Admin)**: Los administradores pueden ver y gestionar citas en toda la clínica, cancelar y filtrar según diversos criterios.
 
-## Build
+## Sprint 3: Historial del Paciente
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- **Perfiles de Pacientes**: Perfiles de pacientes incluyen datos fijos y registros de salud dinámicos.
+- **Creación de Historial (Especialista)**: Especialistas pueden agregar registros de salud después de las consultas.
+- **Exportar Informes**: Los administradores pueden descargar datos de usuarios (Excel) e historiales de salud de pacientes (PDF).
 
-## Running unit tests
+## Sprint 4: Análisis y Reportes
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+- **Registro de Usuarios**: Seguimiento de ingresos de usuarios con marca de tiempo.
+- **Estadísticas de Citas**: Visualización de datos de citas por especialidad y día.
+- **Descarga de Reportes**: Exportar análisis en formato Excel o PDF.
 
-## Running end-to-end tests
+## Sprint 5: Datos de Salud Dinámicos
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+- **Nuevos Datos de Salud**: Especialistas pueden ingresar datos con controles específicos.
+- **Captcha Personalizado**: Directiva de captcha única para entrada segura de datos.
+- **Animaciones**: Implementar seis animaciones de transición para una experiencia de usuario más fluida.
 
-## Further help
+## Sprint 6: Soporte Multilingüe y Encuestas
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+- **Interfaz de Usuario Multilingüe**: Elija entre inglés, español y portugués.
+- **Encuestas para Pacientes**: Recopile comentarios de pacientes con diversas preguntas.
+- **Informes Estadísticos**: Genere informes sobre visitas a la clínica, recuentos de pacientes y médicos, y respuestas de encuestas.
+
+Siéntase libre de explorar las diversas secciones y funcionalidades. Consulte el [Wiki](enlace al wiki) para obtener documentación detallada sobre cada función. Para cualquier problema o consulta, utilice la sección [Issues](enlace a Issues).
+
+¡Gracias por contribuir al éxito de la Clínica Online! 🏥💻
