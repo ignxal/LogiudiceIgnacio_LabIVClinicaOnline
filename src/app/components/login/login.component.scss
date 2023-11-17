@@ -1,6 +1,15 @@
 .user-tile {
-  background-color: transparent;
+  background-color: #646464;
   text-align: center;
+}
+
+.user-tile:hover {
+  background-color: #787878;
+  transition: ease 0.5s;
+}
+
+button:active {
+  scale: 0.9;
 }
 
 .user-profile {

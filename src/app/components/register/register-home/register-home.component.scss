@@ -1,6 +1,6 @@
 h1 {
   font-weight: bold;
-  color: #83a4f2;
+  color: black;
   margin: 0;
 }
 
@@ -15,12 +15,12 @@ button {
   letter-spacing: 1px;
   text-transform: uppercase;
   transition: transform 80ms ease-in;
-  max-width: 25%;
   margin: auto;
+  max-width: 25%;
 }
 
 button:hover {
-  background-color: #9a83f2;
+  background-color: #5582ed;
   transition: ease 0.5s;
 }
 
@@ -39,7 +39,7 @@ p {
 
 .container {
   margin-top: 60px;
-  background-color: #fff;
+  background-color: #dadada;
   border-radius: 10px;
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
   position: relative;

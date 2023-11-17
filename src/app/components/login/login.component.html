@@ -13,7 +13,7 @@
         width="72"
         height="57"
       />
-      <h1 class="h3 mb-3 fw-normal">Iniciar Sesion</h1>
+      <h1 class="h3 mb-3 fw-normal">Ingresá tus credenciales</h1>
 
       <div class="form-floating">
         <input
@@ -48,22 +48,28 @@
       </button>
     </form>
     <br />
-    <mat-grid-list cols="3" rowHeight="100px">
-      <mat-grid-tile *ngFor="let usuario of usuarios" class="user-tile">
-        <button mat-button (click)="selectUser(usuario)">
-          <div class="user-profile">
-            <img
-              [src]="getImagen(usuario.role)"
-              alt="Profile"
-              class="profile-image"
-            />
-            <div class="user-info">
-              <div>{{ usuario.nombreCompleto }}</div>
-              <div>{{ usuario.role }}</div>
+    <div>
+      <mat-grid-list cols="3" rowHeight="100px" style="margin: 5em">
+        <mat-grid-tile *ngFor="let usuario of usuarios" class="user-tile">
+          <button
+            mat-button
+            (click)="selectUser(usuario)"
+            style="width: 100%; height: 100%"
+          >
+            <div class="user-profile">
+              <img
+                [src]="getImagen(usuario.role)"
+                alt="Profile"
+                class="profile-image"
+              />
+              <div class="user-info">
+                <div>{{ usuario.nombreCompleto }}</div>
+                <div>{{ usuario.role }}</div>
+              </div>
             </div>
-          </div>
-        </button>
-      </mat-grid-tile>
-    </mat-grid-list>
+          </button>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </div>
   </div>
 </main>

@@ -6,3 +6,70 @@
 .ng-invalid:not(form).ng-touched {
   border-left: 5px solid #a94442;
 }
+
+input,
+label,
+small,
+h2 {
+  color: black;
+}
+
+h2 {
+  font-weight: bold;
+}
+
+button {
+  border-radius: 1px;
+  border: 1px solid #83a4f2;
+  background-color: #83a4f2;
+  color: black;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 12px 45px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: transform 80ms ease-in;
+  margin: auto;
+}
+
+button:hover {
+  background-color: #5582ed;
+  transition: ease 0.5s;
+}
+
+button:active {
+  scale: 0.9;
+}
+
+.form-label {
+  text-align: left;
+  width: 100%;
+  margin-bottom: 5px;
+}
+
+.container {
+  margin-top: 60px;
+  background-color: #dadada;
+  border-radius: 10px;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  position: relative;
+  overflow: hidden;
+  width: 1200px;
+  max-width: 100%;
+  min-height: 800px;
+}
+
+.overlay-panel {
+  padding: 15%;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  transform: translateX(0);
+  transition: transform 0.6s ease-in-out;
+}
