@@ -24,7 +24,7 @@ import { Timestamp } from '@angular/fire/firestore';
 export class RegisterPatientComponent implements OnInit {
   registroForm!: FormGroup;
   tipo: string = '';
-  titulo: string = 'Registro';
+  titulo: string = 'Formulario de registro';
   especialidades: string[] = [];
   captcha: boolean = false;
   specialtyServiceSub!: Subscription;

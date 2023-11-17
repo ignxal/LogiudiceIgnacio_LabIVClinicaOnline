@@ -46,7 +46,7 @@ export class LoginComponent {
     },
     {
       role: 'Specialist',
-      email: 'lelelapancha@specialist.com',
+      email: 'deslelelapancha@specialist.com',
       nombreCompleto: 'Deslele Lapancha',
       contraseña: '12345678',
     },
