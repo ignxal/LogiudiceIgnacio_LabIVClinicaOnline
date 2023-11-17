@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { UserM } from '../../../models/user';
+import Swal from 'sweetalert2';
 import { AuthService } from '../../../services/auth.service';
 import { LoaderService } from '../../../services/loader.service';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
@@ -10,28 +12,42 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit {
-  userLogged = this.authService.getUserLogged();
-  displayLoader: boolean = false;
-  displayLoaderSub!: Subscription;
+  usuarioLogueado!: UserM | undefined;
+  mostrarLoader: boolean = false;
+  mostrarLoaderSub!: Subscription;
 
   constructor(
-    private authService: AuthService,
+    private auth: AuthService,
     private router: Router,
     private loader: LoaderService
   ) {}
 
   ngOnInit(): void {
-    this.displayLoaderSub = this.loader.loaderState$.subscribe(
-      (state) => (this.displayLoader = state)
+    this.mostrarLoaderSub = this.loader.loaderState$.subscribe(
+      (state) => (this.mostrarLoader = state)
     );
+
+    this.auth.onUserLogged.subscribe((user) => {
+      this.usuarioLogueado = user;
+    });
+
+    this.auth.onUserLogout.subscribe((e) => {
+      this.usuarioLogueado = undefined;
+    });
+
+    this.auth.getUserFromStorage();
   }
 
-  onLogin() {
-    this.router.navigate(['/login']);
-  }
+  logout() {
+    this.auth.CerrarSesion();
+    this.usuarioLogueado = undefined;
 
-  onLogout() {
-    this.authService.logout();
-    this.router.navigate(['']);
+    Swal.fire({
+      icon: 'success',
+      title: 'Cierre de sesion exitoso!',
+      text: 'Te esperamos pronto!',
+    }).then((r) => {
+      this.router.navigate(['']);
+    });
   }
 }

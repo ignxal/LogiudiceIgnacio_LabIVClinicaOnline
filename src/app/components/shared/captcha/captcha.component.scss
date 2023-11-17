@@ -1,0 +1,54 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #ffffff;
+}
+
+.container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.box {
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  border-radius: 5px;
+  padding: 20px;
+}
+
+.captcha {
+  font-weight: bold;
+  font-size: 2em;
+  padding: 3px;
+  border-radius: 5px;
+  color: #000000;
+}
+
+.restart a {
+  text-decoration: none;
+}
+
+.btn {
+  margin: 2px;
+}
+
+.errmsg {
+  color: black;
+  padding: 5px;
+  transition: 0.5s ease;
+}
+
+input {
+  width: 100%;
+  margin-bottom: 3px;
+  border-radius: 5px;
+}

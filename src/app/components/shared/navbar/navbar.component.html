@@ -1,27 +1,53 @@
-<nav class="navbar bg-body-tertiary" style="background-color: #000 !important">
-  <a class="navbar-brand title" style="color: #f1f1f1 !important" href="#"
-    >CLINICA ONLINE</a
-  >
-  <ng-container *ngIf="userLogged | async as user; else loginButton">
-    <div class="d-flex align-items-center" style="margin-right: 1em">
-      <a class="navbar-brand user" href="#" style="color: #f1f1f1 !important">
-        <img
-          *ngIf="user.photoURL"
-          [src]="user.photoURL"
-          width="45"
-          height="45"
-          class="d-inline-block align-center m-2"
-          style="border-radius: 100%"
-        />
-        {{ user.photoURL ? "" : user.email }}
-      </a>
-      <button class="btn btn-danger" (click)="onLogout()">LOGOUT</button>
+<nav class="site-header sticky-top py-1">
+  <div class="container d-flex flex-column flex-md-row justify-content-between">
+    <a class="py-2" routerLink="">
+      <img
+        src="../../../../favicon.ico"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="d-block mb-2"
+      />
+    </a>
+    <div class="container d-flex flex-column flex-md-row justify-content-end">
+      <ng-container
+        *ngIf="this.usuarioLogueado === undefined; else elseTemplate"
+      >
+        <a
+          class="py-2 d-none d-md-inline-block p-2"
+          routerLink="register"
+          routerLinkActive="text-white"
+          >Registrarse</a
+        >
+        <a
+          class="py-2 d-none d-md-inline-block p-2"
+          routerLink="login"
+          routerLinkActive="text-white"
+          >Iniciar sesion</a
+        >
+      </ng-container>
+      <ng-template #elseTemplate>
+        <div class="d-flex align-items-center" style="margin-right: 1em">
+          <a
+            class="navbar-brand user"
+            href="#"
+            style="color: #f1f1f1 !important; margin-right: 0.5em"
+          >
+            {{
+              this.usuarioLogueado?.nombre +
+                " " +
+                this.usuarioLogueado?.apellido
+            }}
+          </a>
+          <button class="btn btn-danger" (click)="logout()">LOGOUT</button>
+        </div>
+      </ng-template>
     </div>
-  </ng-container>
-  <ng-template #loginButton style="margin-right: 1em">
-    <div class="d-flex align-items-center" style="margin-right: 1em">
-      <button class="btn btn-primary" (click)="onLogin()">LOGIN</button>
-    </div>
-  </ng-template>
-  <app-loader *ngIf="displayLoader"></app-loader>
+  </div>
+  <app-loader *ngIf="mostrarLoader"></app-loader>
 </nav>

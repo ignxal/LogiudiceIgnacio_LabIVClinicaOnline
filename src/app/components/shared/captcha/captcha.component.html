@@ -1,0 +1,34 @@
+<div class="col justify-content-center text-center">
+  <h3>Captcha:</h3>
+  <div
+    id="captcha"
+    class="captcha"
+    appCaptcha
+    [requestCaptcha]="generateCaptcha"
+    [enteredCaptcha]="captchaForDirective"
+    (captcha)="newCaptcha($event)"
+    (captchaResult)="captchaResultDirective($event)"
+  >
+    {{ captcha }}
+    <button
+      class="btn btn-warning btn-primary col-1"
+      type="button"
+      (click)="createCaptcha()"
+    >
+      Regenerar
+    </button>
+  </div>
+</div>
+<br />
+<div class="input col-2" style="margin: auto">
+  <input
+    type="text"
+    class="form-control"
+    name="reCaptcha"
+    [maxlength]="6"
+    id="reCaptcha"
+    (ngModelChange)="onChange($event)"
+    [(ngModel)]="enteredCaptcha"
+  />
+</div>
+<br />
