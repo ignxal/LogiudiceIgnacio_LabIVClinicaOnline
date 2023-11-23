@@ -50,21 +50,21 @@
     <br />
     <div>
       <mat-grid-list cols="3" rowHeight="100px" style="margin: 5em">
-        <mat-grid-tile *ngFor="let usuario of usuarios" class="user-tile">
+        <mat-grid-tile *ngFor="let x of users" class="user-tile">
           <button
             mat-button
-            (click)="selectUser(usuario)"
+            (click)="selectUser(x)"
             style="width: 100%; height: 100%"
           >
             <div class="user-profile">
               <img
-                [src]="getImagen(usuario.role)"
+                [src]="getImage(x.role)"
                 alt="Profile"
                 class="profile-image"
               />
               <div class="user-info">
-                <div>{{ usuario.nombreCompleto }}</div>
-                <div>{{ usuario.role }}</div>
+                <div>{{ x.fullName }}</div>
+                <div>{{ x.role }}</div>
               </div>
             </div>
           </button>

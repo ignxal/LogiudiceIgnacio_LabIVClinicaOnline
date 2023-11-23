@@ -14,47 +14,47 @@ import Swal from 'sweetalert2';
 export class LoginComponent {
   loginForm!: FormGroup;
   selectedUser: any;
-  usuarios: {
+  users: {
     role: Roles;
     email: string;
-    nombreCompleto: string;
-    contraseña: string;
+    fullName: string;
+    password: string;
   }[] = [
     {
       role: 'Patient',
       email: 'lelelapancha@patient.com',
-      nombreCompleto: 'Lele Lapancha',
-      contraseña: '123456',
+      fullName: 'Lele Lapancha',
+      password: '123456',
     },
     {
       role: 'Patient',
       email: 'lelelapata@patient.com',
-      nombreCompleto: 'Lele Lapata',
-      contraseña: '123456',
+      fullName: 'Lele Lapata',
+      password: '123456',
     },
     {
       role: 'Patient',
       email: 'lelelapie@patient.com',
-      nombreCompleto: 'Lele Lapie',
-      contraseña: '123456',
+      fullName: 'Lele Lapie',
+      password: '123456',
     },
     {
       role: 'Specialist',
       email: 'deslelelapata@specialist.com',
-      nombreCompleto: 'Deslele Lapata',
-      contraseña: '12345678',
+      fullName: 'Deslele Lapata',
+      password: 'qwerty',
     },
     {
       role: 'Specialist',
       email: 'deslelelapancha@specialist.com',
-      nombreCompleto: 'Deslele Lapancha',
-      contraseña: '12345678',
+      fullName: 'Deslele Lapancha',
+      password: 'qwerty',
     },
     {
       role: 'Admin',
       email: 'admin@admin.com',
-      nombreCompleto: 'Administrador',
-      contraseña: '123456',
+      fullName: 'Administrador',
+      password: '123456',
     },
   ];
 
@@ -75,7 +75,7 @@ export class LoginComponent {
   submitForm() {
     this.loader.show();
     this.auth
-      .IniciarSesion(
+      .loginUser(
         this.loginForm.get('email')?.value,
         this.loginForm.get('password')?.value
       )
@@ -88,7 +88,7 @@ export class LoginComponent {
             text: 'Redirigiendo al inicio...',
             timer: 1500,
             didDestroy: () => {
-              this.limpiarFormulario();
+              this.resetForm();
               this.router.navigate(['']);
             },
           });
@@ -98,12 +98,12 @@ export class LoginComponent {
             title: 'Error en el inicio de sesion!',
             text: result.error,
           });
-          this.limpiarFormulario();
+          this.resetForm();
         }
       });
   }
 
-  limpiarFormulario() {
+  resetForm() {
     this.loginForm.get('email')?.setValue('');
     this.loginForm.get('password')?.setValue('');
   }
@@ -112,18 +112,18 @@ export class LoginComponent {
     this.selectedUser = user;
     this.loginForm.patchValue({
       email: user.email,
-      password: user.contraseña,
+      password: user.password,
     });
   }
 
-  getImagen(role: Roles) {
+  getImage(role: Roles) {
     switch (role) {
       case 'Admin':
         return 'assets/register/admin.png';
       case 'Specialist':
-        return 'assets/register/specialist.png';
+        return 'https://firebasestorage.googleapis.com/v0/b/clinica-online-c98bc.appspot.com/o/profile-pictures%2Fdeslelelapancha%40specialist.com%2F1700621574563?alt=media&token=539bb799-bc89-43b2-8188-39c8c9172d44';
       case 'Patient':
-        return 'assets/register/patient.png';
+        return 'https://firebasestorage.googleapis.com/v0/b/clinica-online-c98bc.appspot.com/o/profile-pictures%2Flelelapancha%40patient.com%2F1700622815837?alt=media&token=a4a2fa10-41d2-4dde-9af4-6ccdcf48982c';
     }
   }
 }

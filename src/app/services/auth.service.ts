@@ -7,12 +7,15 @@ import {
   sendEmailVerification,
   signInWithEmailAndPassword,
   signOut,
+  updateProfile,
 } from '@angular/fire/auth';
+
 import { Timestamp } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { UserM } from '../models/user';
 import { UserService } from './user.service';
+import { FilesService } from './file.service';
 
 @Injectable({
   providedIn: 'root',
@@ -25,76 +28,96 @@ export class AuthService {
 
   constructor(
     private usuariosService: UserService,
+    private fileService: FilesService,
     private auth: Auth,
     private router: Router
   ) {
     this.getUserFromStorage();
   }
 
-  async RegistrarUsuario(
+  async registerUser(
     usuario: UserM,
-    password: string
+    password: string,
+    fotos: File[] | null
   ): Promise<{ result: boolean; error: string }> {
-    usuario.registerDate = Timestamp.now();
-    if (usuario.role === 'Admin') usuario.emailVerified = true;
-    return this.usuariosService.exists(usuario).then((exists) => {
-      if (exists) return { result: false, error: 'User exists' };
-      else
-        return createUserWithEmailAndPassword(
-          this.auth,
-          usuario.email,
-          password
-        )
-          .then((userCredential) => {
-            this.userCredential = userCredential.user;
-            usuario.uid = userCredential.user.uid;
-            this.usuariosService.addOne(usuario);
-            return { result: true, error: '' };
-          })
-          .catch((error: any) => {
-            console.log(error);
-            switch (error.code) {
-              case 'auth/invalid-email':
-                return { result: false, error: 'Correo electrónico invalido' };
-              case 'auth/email-already-in-use':
-                return {
-                  result: false,
-                  error: 'Correo electrónico ya registrado',
-                };
-              case 'auth/invalid-password':
-                return { result: false, error: 'Contraseña debil' };
-              default:
-                return { result: false, error: 'Error al registrarse' };
-            }
-          });
-    });
+    try {
+      usuario.registerDate = Timestamp.now();
+      if (usuario.role === 'Admin') usuario.emailVerified = true;
+
+      const exists = await this.usuariosService.exists(usuario);
+
+      if (exists) {
+        return { result: false, error: 'La persona ya existe' };
+      }
+
+      const userCredential = await createUserWithEmailAndPassword(
+        this.auth,
+        usuario.email,
+        password
+      );
+
+      this.userCredential = userCredential.user;
+      usuario.uid = userCredential.user.uid;
+
+      const picturesURL: any = await this.fileService.updateImages(
+        usuario.email,
+        fotos
+      );
+
+      await updateProfile(this.auth.currentUser!, {
+        displayName: usuario.nombre + ' ' + usuario.apellido,
+        photoURL: picturesURL[0],
+      });
+
+      usuario.photoURL = picturesURL[0];
+      usuario.imageUrl = [...picturesURL];
+
+      await this.usuariosService.addOne(usuario);
+
+      return { result: true, error: '' };
+    } catch (error: any) {
+      switch (error.code) {
+        case 'auth/invalid-email':
+          return { result: false, error: 'Correo electrónico invalido' };
+        case 'auth/email-already-in-use':
+          return { result: false, error: 'Correo electrónico ya registrado' };
+        case 'auth/invalid-password':
+          return { result: false, error: 'Contraseña debil' };
+        default:
+          return { result: false, error: 'Error al registrarse' };
+      }
+    }
   }
 
-  enviarConfirmarCorreo() {
-    console.log('email enviado');
+  sendMailConfirmation() {
     sendEmailVerification(this.userCredential);
   }
 
-  async confirmarCorreo(oobCode: string) {
-    const resp = await applyActionCode(this.auth, oobCode);
+  async activateAccount(oobCode: string) {
+    await applyActionCode(this.auth, oobCode);
+
     this.usuariosService.getOne(this.auth.currentUser!.uid).then((user) => {
       user.emailVerified = true;
       user.registerDate = Timestamp.now();
-      if (user.role !== 'Specialist') user.status = 'Habilitado';
+
       this.usuariosService.update(user);
+
       Swal.fire({
         icon: 'success',
         title: 'Verificación exitosa!',
         text: 'Redirigiendo al inicio de sesion!',
         timer: 1500,
-      }).then((r) => {
-        this.router.navigate(['/login']);
-      });
+      })
+        .then(() => {
+          this.router.navigate(['/login']);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     });
   }
 
-  async IniciarSesion(email: string, password: string) {
-    console.log('antes', this.auth.currentUser);
+  async loginUser(email: string, password: string) {
     try {
       const userCredential = await signInWithEmailAndPassword(
         this.auth,
@@ -138,7 +161,7 @@ export class AuthService {
     }
   }
 
-  async CerrarSesion() {
+  async logoutUser() {
     try {
       await signOut(this.auth);
       this.usuarioLogueado = undefined;

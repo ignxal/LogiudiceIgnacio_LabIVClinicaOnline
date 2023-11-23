@@ -13,6 +13,13 @@ const routes: Routes = [
         (m) => m.RegisterModule
       ),
   },
+  {
+    path: 'mailVerified',
+    loadChildren: () =>
+      import('./components/verification/verification.module').then(
+        (m) => m.VerificationModule
+      ),
+  },
 ];
 
 @NgModule({

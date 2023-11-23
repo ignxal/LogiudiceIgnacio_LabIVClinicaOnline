@@ -1,0 +1,33 @@
+input,
+label,
+small,
+h2 {
+  color: rgb(232, 230, 227);
+}
+
+h2 {
+  font-weight: bold;
+}
+
+button {
+  border-radius: 1px;
+  border: 1px solid #83a4f2;
+  background-color: #83a4f2;
+  color: rgb(232, 230, 227);
+  font-size: 12px;
+  font-weight: bold;
+  padding: 12px 45px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: transform 80ms ease-in;
+  margin: auto;
+}
+
+button:hover {
+  background-color: #5582ed;
+  transition: ease 0.5s;
+}
+
+button:active {
+  scale: 0.9;
+}

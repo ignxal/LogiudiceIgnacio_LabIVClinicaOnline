@@ -7,22 +7,21 @@ import {
   DocumentData,
   DocumentReference,
   Firestore,
-  getDoc,
   getDocs,
   query,
   setDoc,
   updateDoc,
   where,
 } from '@angular/fire/firestore';
-import { UserM } from '../models/user';
 import { Observable } from 'rxjs';
+import { UserM } from '../models/user';
 import { CollectionsService } from './collections.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  collection: string = 'usuarios';
+  collection: string = 'users';
   userCollection!: CollectionReference<DocumentData>;
   userList!: Observable<UserM[]>;
   db!: Firestore;
@@ -31,7 +30,7 @@ export class UserService {
     private _firestore: Firestore,
     private collections: CollectionsService
   ) {
-    this.userCollection = collection(this._firestore, 'usuarios');
+    this.userCollection = collection(this._firestore, 'users');
     this.userList = collectionData(this.userCollection) as Observable<UserM[]>;
   }
 
@@ -63,16 +62,13 @@ export class UserService {
     return this.userList;
   }
 
-  addOne(user: UserM): boolean {
-    console.log(user);
-    if (this.userList) {
-      let docRef: DocumentReference<DocumentData> = doc(this.userCollection);
-      user.id_user = docRef.id;
-      setDoc(docRef, { ...user });
-      return true;
-    }
-    return false;
+  async addOne(user: UserM): Promise<boolean> {
+    const docRef: DocumentReference<DocumentData> = doc(this.userCollection);
+    setDoc(docRef, { ...user });
+
+    return true;
   }
+
   update(item: UserM) {
     const usuario = doc(this.userCollection, item.id_user);
     return updateDoc(usuario, { ...item });
@@ -89,6 +85,6 @@ export class UserService {
   }
 
   getAllUsers(): Observable<UserM[]> {
-    return this.collections.getAllSnapshot(this.collection, 'registryDate');
+    return this.collections.getAllSnapshot(this.collection, 'registerDate');
   }
 }

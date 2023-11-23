@@ -1,10 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { UserM } from '../../../models/user';
@@ -13,7 +8,6 @@ import { AuthService } from 'src/app/services/auth.service';
 import { SpecialtyService } from 'src/app/services/specialty.service';
 import { LoaderService } from 'src/app/services/loader.service';
 import Swal from 'sweetalert2';
-import { UserService } from '../../../services/user.service';
 import { Timestamp } from '@angular/fire/firestore';
 
 @Component({
@@ -28,11 +22,10 @@ export class RegisterSpecialistComponent implements OnInit {
   especialidades: string[] = [];
   especialidadesSub!: Subscription;
   captcha: boolean = false;
+  file: any = [];
 
   constructor(
-    private formBuilder: FormBuilder,
     private auth: AuthService,
-    private usuariosService: UserService,
     private loader: LoaderService,
     private router: Router,
     private especialidadesService: SpecialtyService
@@ -124,7 +117,6 @@ export class RegisterSpecialistComponent implements OnInit {
 
   submitForm() {
     this.registroForm.markAllAsTouched();
-
     if (!this.captcha) {
       Swal.fire({
         icon: 'error',
@@ -139,7 +131,7 @@ export class RegisterSpecialistComponent implements OnInit {
       let contraseña = this.password?.value;
       let usuario = this.armarUsuario();
       this.auth
-        .RegistrarUsuario(usuario, contraseña)
+        .registerUser(usuario, contraseña, this.file)
         .then((result) => {
           this.registroExistoso(result);
           this.loader.hide();
@@ -161,11 +153,12 @@ export class RegisterSpecialistComponent implements OnInit {
       apellido: this.apellido?.value,
       documento: this.dni?.value,
       edad: this.edad?.value,
-      fotos: [this.perfil?.value],
+      photoURL: '',
+      imageUrl: [],
       role: 'Specialist',
       obraSocial: '',
       especialidad: this.especialidad?.value,
-      status: 'Habilitado',
+      status: 'No Habilitado',
       emailVerified: false,
       approved: false,
       registerDate: Timestamp.now(),
@@ -182,8 +175,7 @@ export class RegisterSpecialistComponent implements OnInit {
 
         timer: 1500,
       }).then((r) => {
-        this.auth.enviarConfirmarCorreo();
-
+        this.auth.sendMailConfirmation();
         this.limpiarFormulario();
         this.router.navigate(['']);
       });
@@ -224,16 +216,10 @@ export class RegisterSpecialistComponent implements OnInit {
     }
   }
 
-  handleFileInput(event: any, input: string) {
-    const file = event.target.files[0];
-    const reader = new FileReader();
-
-    reader.onload = (e: any) => {
-      const base64String = e.target.result;
-      this.registroForm.get(input)?.setValue(base64String);
-    };
-
-    reader.readAsDataURL(file);
+  handleFileInput($event: any, input: string) {
+    const files = Array.from($event.target.files);
+    this.file.push(...files);
+    this.registroForm.get(input)?.setValue(files);
   }
 
   limpiarFormulario() {
@@ -249,6 +235,7 @@ export class RegisterSpecialistComponent implements OnInit {
     this.password?.setValue('');
     this.tipoUsuario?.setValue('');
   }
+
   captchaResult(result: any) {
     this.captcha = result;
   }

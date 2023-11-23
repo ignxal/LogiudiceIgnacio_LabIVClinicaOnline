@@ -6,7 +6,12 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
   padding: 0;
-  background-color: #333;
-  color: #fff;
+  background-color: rgb(38, 42, 43);
+  color: rgb(232, 230, 227);
   user-select: none;
+}
+
+.form-control {
+  background-color: #181a1b;
+  border: 1px solid #383d3f;
 }

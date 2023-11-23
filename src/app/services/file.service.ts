@@ -10,43 +10,29 @@ import {
 @Injectable({
   providedIn: 'root',
 })
-export class FileService {
-  public listUrl: string[] = [];
-
+export class FilesService {
   constructor(public storage: Storage) {}
 
-  async updateImages(user: string, files: any): Promise<string[]> {
+  async updateImages(user: string, files: any) {
     const downloadURLs: string[] = [];
 
     for (let index = 0; index < files.length; index++) {
+      const file = files[index];
       const imgRef = ref(
         this.storage,
         'profile-pictures/' + user + '/' + new Date().getTime().toString()
       );
-      const element = files[index];
-      await uploadBytes(imgRef, element)
-        .then(async (snapshot) => {
-          await getDownloadURL(snapshot.ref).then((res) => {
-            downloadURLs.push(res);
-          });
-        })
-        .catch((error) => console.log(error));
+
+      try {
+        const uploadTask = await uploadBytes(imgRef, file);
+        const downloadURL = await getDownloadURL(uploadTask.ref);
+
+        downloadURLs.push(downloadURL);
+      } catch (error) {
+        console.log(error);
+      }
     }
 
     return downloadURLs;
-  }
-
-  async getProfilePictures(user: string) {
-    this.listUrl = [];
-    const imagesRef = ref(this.storage, 'profile-pictures/' + user);
-    await listAll(imagesRef)
-      .then(async (res) => {
-        for (let item of res.items) {
-          await getDownloadURL(item).then((res) => {
-            this.listUrl.push(res);
-          });
-        }
-      })
-      .catch((error) => console.log(error));
   }
 }

@@ -1,20 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { UserM } from '../../../models/user';
 import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
-import { SpecialtyService } from 'src/app/services/specialty.service';
 import { LoaderService } from 'src/app/services/loader.service';
-import Swal from 'sweetalert2';
-import { UserService } from '../../../services/user.service';
 import { Timestamp } from '@angular/fire/firestore';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-register-patient',
@@ -27,13 +19,10 @@ export class RegisterPatientComponent implements OnInit {
   titulo: string = 'Formulario de registro';
   especialidades: string[] = [];
   captcha: boolean = false;
-  specialtyServiceSub!: Subscription;
+  file: any = [];
 
   constructor(
-    private formBuilder: FormBuilder,
     private auth: AuthService,
-    private specialtyService: SpecialtyService,
-    private usuariosService: UserService,
     private loader: LoaderService,
     private router: Router
   ) {}
@@ -79,14 +68,6 @@ export class RegisterPatientComponent implements OnInit {
       },
       this.confirmarContraseñaValidator()
     );
-
-    this.specialtyServiceSub = this.specialtyService
-      .getAll()
-      .subscribe((especialidades) => {
-        this.especialidades = especialidades.map(
-          (especialidad) => especialidad.nombre
-        );
-      });
   }
 
   get perfil2() {
@@ -143,17 +124,17 @@ export class RegisterPatientComponent implements OnInit {
       this.loader.show();
       let contraseña = this.password?.value;
       let usuario = this.armarUsuario();
+
       this.auth
-        .RegistrarUsuario(usuario, contraseña)
+        .registerUser(usuario, contraseña, this.file)
         .then((result) => {
           this.registroExistoso(result);
           this.loader.hide();
         })
-        .catch((e) => {
+        .catch((err) => {
           this.loader.hide();
-          console.log(e);
+          console.log(err);
         });
-      return;
     }
   }
 
@@ -166,7 +147,8 @@ export class RegisterPatientComponent implements OnInit {
       apellido: this.apellido?.value,
       documento: this.dni?.value,
       edad: this.edad?.value,
-      fotos: [this.perfil?.value, this.perfil2?.value],
+      photoURL: '',
+      imageUrl: [],
       role: 'Patient',
       obraSocial: this.obraSocial?.value,
       especialidad: '',
@@ -186,7 +168,7 @@ export class RegisterPatientComponent implements OnInit {
         text: 'Redirigiendo al inicio...',
         timer: 1500,
       }).then((r) => {
-        this.auth.enviarConfirmarCorreo();
+        this.auth.sendMailConfirmation();
         this.limpiarFormulario();
         this.router.navigate(['']);
       });
@@ -199,16 +181,10 @@ export class RegisterPatientComponent implements OnInit {
     }
   }
 
-  handleFileInput(event: any, input: string) {
-    const file = event.target.files[0];
-    const reader = new FileReader();
-
-    reader.onload = (e: any) => {
-      const base64String = e.target.result;
-      this.registroForm.get(input)?.setValue(base64String);
-    };
-
-    reader.readAsDataURL(file);
+  handleFileInput($event: any, input: string) {
+    const files = Array.from($event.target.files);
+    this.file.push(...files);
+    this.registroForm.get(input)?.setValue(files);
   }
 
   limpiarFormulario() {

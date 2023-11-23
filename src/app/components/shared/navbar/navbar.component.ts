@@ -39,7 +39,7 @@ export class NavbarComponent implements OnInit {
   }
 
   logout() {
-    this.auth.CerrarSesion();
+    this.auth.logoutUser();
     this.usuarioLogueado = undefined;
 
     Swal.fire({

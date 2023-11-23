@@ -9,7 +9,8 @@ export interface UserM {
   apellido: string;
   documento: string;
   edad: number;
-  fotos: string[];
+  photoURL: string;
+  imageUrl: string[];
   role: Roles;
   obraSocial: string;
   especialidad: string;

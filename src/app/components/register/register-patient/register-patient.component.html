@@ -139,7 +139,7 @@
           <input
             type="file"
             id="perfil"
-            accept="image/jpg, image/jpeg"
+            accept="image/jpg, image/jpeg, image/png"
             class="form-control"
             (change)="handleFileInput($event, 'perfil')"
             required
@@ -153,9 +153,10 @@
           <input
             type="file"
             id="perfil2"
-            accept="image/jpg, image/jpeg"
+            accept="image/jpg, image/jpeg, image/png"
             class="form-control"
             (change)="handleFileInput($event, 'perfil2')"
+            multiple
             required
           />
           <small class="text-danger" *ngIf="perfil2?.errors && perfil2?.touched"
