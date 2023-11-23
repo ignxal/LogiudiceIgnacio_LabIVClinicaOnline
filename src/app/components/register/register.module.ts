@@ -8,7 +8,6 @@ import { RegisterSpecialistComponent } from './register-specialist/register-spec
 import { RegisterPatientComponent } from './register-patient/register-patient.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SharedModule } from '../shared/shared.module';
-
 import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({

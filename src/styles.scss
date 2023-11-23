@@ -11,7 +11,15 @@ body {
   user-select: none;
 }
 
-.form-control {
+.form-control,
+.form-select {
   background-color: #181a1b;
   border: 1px solid #383d3f;
+  color: rgb(232, 230, 227);
+}
+
+.form-control:focus,
+.form-select:focus {
+  background-color: #3c4144;
+  color: white;
 }

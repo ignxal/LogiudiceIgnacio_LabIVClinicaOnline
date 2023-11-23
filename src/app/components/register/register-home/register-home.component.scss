@@ -1,14 +1,13 @@
 h1 {
   font-weight: bold;
-  color: black;
   margin: 0;
 }
 
 button {
+  color: #1865c1;
   border-radius: 1px;
-  border: 1px solid #83a4f2;
-  background-color: #83a4f2;
-  color: black;
+  border: 2px solid #1865c1;
+  background-color: #bbd0ee;
   font-size: 12px;
   font-weight: bold;
   padding: 12px 45px;
@@ -33,15 +32,14 @@ p {
   line-height: 20px;
   letter-spacing: 0.5px;
   margin: 20px 0 15px;
-  color: #010101;
-  font-weight: bold;
 }
 
 .container {
   margin-top: 60px;
-  background-color: #dadada;
+  background-color: rgb(45, 49, 51);
   border-radius: 10px;
-  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px,
+    rgba(0, 0, 0, 0.22) 0px 10px 10px;
   position: relative;
   overflow: hidden;
   width: 1200px;

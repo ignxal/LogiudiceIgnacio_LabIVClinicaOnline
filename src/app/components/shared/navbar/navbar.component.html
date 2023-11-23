@@ -34,6 +34,36 @@
       <ng-template #elseTemplate>
         <div class="d-flex align-items-center" style="margin-right: 1em">
           <a
+            *ngIf="this.usuarioLogueado?.role === 'Admin'"
+            class="py-2 d-none d-md-inline-block p-2"
+            href="#"
+            style="color: #f1f1f1 !important; margin-right: 0.5em"
+            routerLink="admin"
+            routerLinkActive="text-white"
+          >
+            {{ "Especialistas" }}
+          </a>
+          <a
+            *ngIf="this.usuarioLogueado?.role === 'Admin'"
+            class="py-2 d-none d-md-inline-block p-2"
+            href="#"
+            style="color: #f1f1f1 !important; margin-right: 0.5em"
+            routerLink="admin/register"
+            routerLinkActive="text-white"
+          >
+            {{ "Registrar" }}
+          </a>
+          <a
+            *ngIf="this.usuarioLogueado?.role === 'Admin'"
+            class="py-2 d-none d-md-inline-block p-2"
+            href="#"
+            style="color: #f1f1f1 !important; margin-right: 0.5em"
+            routerLink="admin/userlist"
+            routerLinkActive="text-white"
+          >
+            {{ "Usuarios" }}
+          </a>
+          <a
             class="navbar-brand user"
             href="#"
             style="color: #f1f1f1 !important; margin-right: 0.5em"

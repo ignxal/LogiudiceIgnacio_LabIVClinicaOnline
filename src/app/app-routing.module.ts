@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { WelcomeComponent } from './components/welcome/welcome.component';
+import { RolesGuard } from './guards/role.guard';
 
 const routes: Routes = [
   { path: '', component: WelcomeComponent },
@@ -13,6 +14,8 @@ const routes: Routes = [
     path: 'admin',
     loadChildren: () =>
       import('./components/admin/admin.module').then((m) => m.AdminModule),
+    canActivate: [RolesGuard],
+    data: { role: ['Admin'], redirect: '/' },
   },
   {
     path: 'register',

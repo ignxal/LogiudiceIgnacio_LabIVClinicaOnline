@@ -1,0 +1,40 @@
+<div class="container-fluid col-9">
+  <div class="row align-items-md-stretch">
+    <div class="col-md-12">
+      <div class="h-100 p-5 bg-light border rounded-3">
+        <div class="d-flex justify-content-between align-items-center">
+          <h1>Listado de Usuarios</h1>
+          <label (click)="downloadData()" class="btn btn-dark"
+            >Descargar planilla</label
+          >
+        </div>
+        <hr />
+        <div *ngIf="this.usersData as users">
+          <table class="table table-hover text-center" id="users-table">
+            <thead>
+              <tr>
+                <th scope="col">DNI</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Apellido</th>
+                <th scope="col">Edad</th>
+                <th scope="col">Mail</th>
+                <th scope="col">Rol</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let x of users">
+                <td class="align-middle">{{ x.documento }}</td>
+                <td class="align-middle">{{ x.nombre }}</td>
+                <td class="align-middle">{{ x.apellido }}</td>
+                <td class="align-middle">{{ x.edad }}</td>
+                <td class="align-middle">{{ x.email }}</td>
+                <td class="align-middle">{{ x.role }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
