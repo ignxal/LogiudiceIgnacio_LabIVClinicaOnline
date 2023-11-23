@@ -12,10 +12,13 @@ import {
   setDoc,
   updateDoc,
   where,
+  and,
+  QueryFieldFilterConstraint,
 } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { UserM } from '../models/user';
 import { CollectionsService } from './collections.service';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -64,6 +67,7 @@ export class UserService {
 
   async addOne(user: UserM): Promise<boolean> {
     const docRef: DocumentReference<DocumentData> = doc(this.userCollection);
+    user.id_user = docRef.id;
     setDoc(docRef, { ...user });
 
     return true;
@@ -86,5 +90,15 @@ export class UserService {
 
   getAllUsers(): Observable<UserM[]> {
     return this.collections.getAllSnapshot(this.collection, 'registerDate');
+  }
+
+  getAllSpecialists() {
+    const querys = [where('role', '==', 'Specialist')];
+
+    return this.collections.getAllWhereSnapshot(
+      this.collection,
+      and(...querys),
+      'nombre'
+    );
   }
 }

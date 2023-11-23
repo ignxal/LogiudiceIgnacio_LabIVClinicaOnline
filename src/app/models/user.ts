@@ -14,7 +14,6 @@ export interface UserM {
   role: Roles;
   obraSocial: string;
   especialidad: string;
-  status: string;
   emailVerified?: boolean;
   approved?: boolean;
   registerDate: Timestamp;

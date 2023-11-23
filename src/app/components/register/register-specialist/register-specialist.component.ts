@@ -158,7 +158,6 @@ export class RegisterSpecialistComponent implements OnInit {
       role: 'Specialist',
       obraSocial: '',
       especialidad: this.especialidad?.value,
-      status: 'No Habilitado',
       emailVerified: false,
       approved: false,
       registerDate: Timestamp.now(),

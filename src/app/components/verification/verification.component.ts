@@ -39,7 +39,7 @@ export class VerificationComponent implements OnInit {
         Swal.fire({
           icon: 'success',
           title: 'Verificación exitosa!',
-          text: 'Redirigiendo al inicio de sesion!',
+          text: 'Redirigiendo al inicio de sesion',
           timer: 1500,
         }).then((r) => {
           this.router.navigate(['/login']);
@@ -50,7 +50,7 @@ export class VerificationComponent implements OnInit {
         Swal.fire({
           icon: 'error',
           title: 'Verificación fallida!',
-          text: 'Vuelva a intentarlo!',
+          text: 'Volve a intentarlo',
           timer: 1500,
         }).then((r) => {
           this.router.navigate(['/login']);

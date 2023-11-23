@@ -52,9 +52,9 @@ export class LoginComponent {
     },
     {
       role: 'Admin',
-      email: 'admin@admin.com',
-      fullName: 'Administrador',
-      password: '123456',
+      email: 'admin@tippabble.com',
+      fullName: 'Administrador Tippable',
+      password: '123456!',
     },
   ];
 

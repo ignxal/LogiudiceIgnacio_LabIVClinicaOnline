@@ -9,11 +9,11 @@ import { Timestamp } from '@angular/fire/firestore';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-register-patient',
-  templateUrl: './register-patient.component.html',
-  styleUrls: ['./register-patient.component.scss'],
+  selector: 'app-register-admin',
+  templateUrl: './register-admin.component.html',
+  styleUrls: ['./register-admin.component.scss'],
 })
-export class RegisterPatientComponent implements OnInit {
+export class RegisterAdminComponent {
   registroForm!: FormGroup;
   tipo: string = '';
   titulo: string = 'Formulario de registro';
@@ -101,12 +101,6 @@ export class RegisterPatientComponent implements OnInit {
   get dni() {
     return this.registroForm.get('dni');
   }
-  get obraSocial() {
-    return this.registroForm.get('obraSocial');
-  }
-  get especialidad() {
-    return this.registroForm.get('especialidad');
-  }
 
   submitForm() {
     this.registroForm.markAllAsTouched();
@@ -149,8 +143,8 @@ export class RegisterPatientComponent implements OnInit {
       edad: this.edad?.value,
       photoURL: '',
       imageUrl: [],
-      role: 'Patient',
-      obraSocial: this.obraSocial?.value,
+      role: 'Admin',
+      obraSocial: '',
       especialidad: '',
       emailVerified: false,
       approved: true,
@@ -197,7 +191,6 @@ export class RegisterPatientComponent implements OnInit {
     this.email?.setValue('');
     this.password?.setValue('');
     this.tipoUsuario?.setValue('');
-    this.obraSocial?.setValue('');
   }
 
   captchaResult(result: any) {

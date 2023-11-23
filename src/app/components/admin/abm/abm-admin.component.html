@@ -1,0 +1,62 @@
+<div class="container-fluid">
+  <div class="row align-items-md-stretch">
+    <div class="col-md-9">
+      <div class="h-100 p-5 bg-light border rounded-3">
+        <h1>Usuarios</h1>
+        <hr />
+        <div *ngIf="this.usersData as users">
+          <table class="table table-hover text-center">
+            <thead>
+              <tr>
+                <th scope="col">Foto</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Apellido</th>
+                <th scope="col">Especialidad</th>
+                <th scope="col">Habilitacion</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let user of users; let i = index">
+                <td class="align-middle">
+                  <img
+                    class="img-thumbnail"
+                    src="{{
+                      user.photoURL
+                        ? user.photoURL
+                        : '/assets/common/profile-user.png'
+                    }}"
+                    alt="{{ user.displayName }}"
+                    style="width: 100px"
+                  />
+                </td>
+                <td class="align-middle">{{ user.nombre }}</td>
+                <td class="align-middle">{{ user.apellido }}</td>
+                <td class="align-middle">{{ user.especialidad }}</td>
+                <td class="align-middle" *ngIf="user.approved == true">
+                  <button
+                    type="button"
+                    class="btn btn-danger"
+                    (click)="disableUser(user.uid)"
+                  >
+                    Deshabilitar
+                  </button>
+                </td>
+
+                <td class="align-middle" *ngIf="user.approved == false">
+                  <button
+                    type="button"
+                    class="btn btn-success"
+                    (click)="enableUser(user.uid)"
+                  >
+                    Habilitar
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

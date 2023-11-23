@@ -98,7 +98,7 @@ export class AuthService {
 
     this.usuariosService.getOne(this.auth.currentUser!.uid).then((user) => {
       user.emailVerified = true;
-      user.registerDate = Timestamp.now();
+      user.confirmationDate = Timestamp.now();
 
       this.usuariosService.update(user);
 
@@ -130,7 +130,7 @@ export class AuthService {
           if (user.emailVerified) {
             if (
               user.role !== 'Specialist' ||
-              (user.role === 'Specialist' && user.status === 'Habilitado')
+              (user.role === 'Specialist' && user.approved)
             ) {
               this.usuarioLogueado = user;
               this.setUserToStorage();
